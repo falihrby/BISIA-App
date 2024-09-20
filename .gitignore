@@ -1,0 +1,16 @@
+# Ignore virtual environment
+backend/env/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore large binary files
+*.pyd
+*.dll
+*.exe
+*.so

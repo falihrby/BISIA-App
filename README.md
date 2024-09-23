@@ -1,6 +1,6 @@
 # BISIA Application
 
-<img src="frontend/public/bisia-logo.png" alt="BISIA Logo" width="200"/>
+<img src="frontend/public/bisia-logo.png" alt="BISIA Logo" width="300"/>
 
 ## Project Objective
 The **BISIA Application** aims to create an interactive platform to help users, especially the deaf, learn **Indonesian Sign Language (BISINDO)**. The primary feature of the application is real-time hand gesture detection using the device’s camera, allowing users to practice and receive feedback on their sign language skills.

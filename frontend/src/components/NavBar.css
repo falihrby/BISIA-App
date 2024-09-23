@@ -1,0 +1,48 @@
+/* Custom background for the navbar */
+.bg-custom {
+  background-color: #fff;
+}
+
+/* Shadow to be applied when scrolled */
+.navbar-scroll-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Padding for the navbar container */
+.navbar-padding {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* Style the navbar-toggler (hamburger icon button) */
+.navbar-toggler {
+  border: 2px solid #28acfb;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='%2328ACFB' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler:hover {
+  background-color: #28acfb;
+  border-color: #007bff;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Hover effect for the nav-link */
+.nav-link:hover {
+  color: #28acfb;
+}

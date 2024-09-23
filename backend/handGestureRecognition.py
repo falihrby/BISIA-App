@@ -3,11 +3,11 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import logging
+from flask import jsonify
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-mp_hands = mp.solutions.hands
-
+# Import gesture detection functions
 from gesture.A_gesture import detect_bisindo_a
 from gesture.B_gesture import detect_bisindo_b
 from gesture.C_gesture import detect_bisindo_c
@@ -35,16 +35,18 @@ from gesture.X_gesture import detect_bisindo_x
 from gesture.Y_gesture import detect_bisindo_y
 from gesture.Z_gesture import detect_bisindo_z
 
-# Open webcam
-cap = cv2.VideoCapture(0)
-if not cap.isOpened():
-    logging.error("Error: Could not open webcam.")
-    sys.exit()
+# Initialize MediaPipe hands model
+mp_hands = mp.solutions.hands
+
+# Gesture buffer to store recent gestures
+gesture_buffer = []
 
 def detect_and_display_gesture(landmarks1, landmarks2, image):
+    """Detect gestures and display the result on the image."""
     gesture_detected = False
     label = None
 
+    # Mappings for single-hand and double-hand gestures
     gesture_mapping_single = [
         (detect_bisindo_e, "Huruf E Terdeteksi"),
         (detect_bisindo_i, "Huruf I Terdeteksi"),
@@ -77,6 +79,7 @@ def detect_and_display_gesture(landmarks1, landmarks2, image):
         (detect_bisindo_x, "Huruf X Terdeteksi")
     ]
 
+    # Detect gestures
     if landmarks2:
         for detect_fn, text in gesture_mapping_double:
             if detect_fn(landmarks1, landmarks2, image):
@@ -90,53 +93,89 @@ def detect_and_display_gesture(landmarks1, landmarks2, image):
                 gesture_detected = True
                 break
 
+    # If a gesture is detected, display it on the image
     if label:
         cv2.putText(image, label, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    return gesture_detected
+    return gesture_detected, label
 
-gesture_buffer = []
 
 def update_gesture_buffer(gesture):
+    """Update the gesture buffer to store the last few gestures."""
     if len(gesture_buffer) >= 5:
         gesture_buffer.pop(0)
     gesture_buffer.append(gesture)
 
+
 def confirm_gesture():
+    """Confirm if a gesture is consistently detected over multiple frames."""
     gesture_counts = {gesture: gesture_buffer.count(gesture) for gesture in set(gesture_buffer)}
     for gesture, count in gesture_counts.items():
         if count >= 4:
             return gesture
     return None
 
-try:
+
+def process_frame(frame):
+    """Process the captured frame to detect hand gestures."""
+    gesture_detected = False
+    label = None
+
+    # Convert image to RGB (MediaPipe uses RGB format)
+    image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    # Initialize MediaPipe hands for gesture detection
     with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=2) as hands:
+        # Process the image to detect hands
+        results = hands.process(image_rgb)
+
+        # Convert back to BGR for OpenCV display
+        image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
+
+        # If hand landmarks are detected
+        if results.multi_hand_landmarks:
+            # Get hand landmarks
+            landmarks1 = results.multi_hand_landmarks[0]
+            landmarks2 = results.multi_hand_landmarks[1] if len(results.multi_hand_landmarks) > 1 else None
+
+            # Detect the gesture and display it
+            gesture_detected, label = detect_and_display_gesture(landmarks1, landmarks2, image)
+
+            # Draw landmarks on the image
+            for hand_landmarks in results.multi_hand_landmarks:
+                mp.solutions.drawing_utils.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+    # Return whether a gesture was detected and the processed image
+    return gesture_detected, label, image
+
+
+if __name__ == '__main__':
+    # Open webcam
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        logging.error("Error: Could not open webcam.")
+        sys.exit()
+
+    try:
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
                 logging.error("Error: Failed to capture image.")
                 break
 
-            image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = hands.process(image_rgb)
-            image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
+            # Process the frame to detect gestures
+            gesture_detected, label, image = process_frame(frame)
 
-            if results.multi_hand_landmarks:
-                landmarks1 = results.multi_hand_landmarks[0]
-                landmarks2 = results.multi_hand_landmarks[1] if len(results.multi_hand_landmarks) > 1 else None
-
-                gesture_detected = detect_and_display_gesture(landmarks1, landmarks2, image)
-
-                for hand_landmarks in results.multi_hand_landmarks:
-                    mp.solutions.drawing_utils.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-
+            # Display the processed image in a window
             cv2.imshow('BISINDO Gesture Recognition', image)
+
+            # Break the loop if the user presses 'q'
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-except KeyboardInterrupt:
-    pass
+    except KeyboardInterrupt:
+        pass
 
-finally:
-    cap.release()
-    cv2.destroyAllWindows()
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()

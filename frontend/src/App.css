@@ -28,7 +28,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Ensure the content is not overlapped by the fixed navbar */
 .content-wrapper {
-    padding-top: 40px; 
+    padding-top: 40px;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Apply Roboto to Bootstrap-specific components */

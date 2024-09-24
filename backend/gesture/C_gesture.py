@@ -1,7 +1,7 @@
 import numpy as np
 from .common import draw_combined_box, draw_keypoints_for_debugging  # Import both functions
 
-def detect_bisindo_c(landmarks1, image, debug=False):
+def detect_bisindo_c(landmarks1, image, debug=True):
     if landmarks1 is None:
         return False
 

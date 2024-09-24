@@ -1,7 +1,7 @@
 import numpy as np
 from .common import draw_combined_box, draw_keypoints_for_debugging  # Import both functions
 
-def detect_bisindo_l(landmarks1, image, debug=False):
+def detect_bisindo_l(landmarks1, image, debug=True):
     # Only proceed if there is at least one hand detected (landmarks1)
     if landmarks1 is None:
         return False

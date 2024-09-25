@@ -1,5 +1,5 @@
 // frontend/src/pages/Home.js
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Home.css';
@@ -11,7 +11,7 @@ const Home = () => {
   const [gestureResult, setGestureResult] = useState('Terjemahan gerakan tangan kamu akan muncul disini...');
   const [isSending, setIsSending] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [processedImage, setProcessedImage] = useState(null);  // To store the image with landmarks
+  const [processedImage, setProcessedImage] = useState(null);
 
   const startWebcam = async () => {
     try {
@@ -35,17 +35,11 @@ const Home = () => {
     setIsCameraOn(false);
   };
 
-  useEffect(() => {
-    if (isCameraOn) {
-      const intervalId = setInterval(captureFrame, 1500); // Capture frame every 1.5 seconds
-      return () => clearInterval(intervalId);
-    }
-  }, [isCameraOn]);
-
-  const captureFrame = async () => {
+  // Capture frame for real-time processing
+  const captureFrame = useCallback(async () => {
     if (videoRef.current && !isSending) {
       setIsSending(true);
-      setLoading(true);  // Show loading indicator
+      setLoading(true);
 
       const video = videoRef.current;
       const canvas = document.createElement('canvas');
@@ -70,16 +64,29 @@ const Home = () => {
 
         const imgURL = URL.createObjectURL(response.data);  // Create an object URL for the image blob
         setProcessedImage(imgURL);  // Update state to display processed image
-
         setGestureResult('Gesture processed');  // Update text for the gesture result
       } catch (error) {
         console.error('Error detecting gesture:', error);
       } finally {
         setIsSending(false);
-        setLoading(false);  // Hide loading indicator
+        setLoading(false);
       }
     }
-  };
+  }, [isSending]);
+
+  // Real-time loop using requestAnimationFrame
+  const processVideo = useCallback(() => {
+    if (isCameraOn) {
+      captureFrame();  // Capture each frame and process it
+      requestAnimationFrame(processVideo);  // Continue the loop for real-time detection
+    }
+  }, [isCameraOn, captureFrame]);
+
+  useEffect(() => {
+    if (isCameraOn) {
+      processVideo();  // Start the real-time processing loop
+    }
+  }, [isCameraOn, processVideo]);
 
   return (
     <div className="content-wrapper">
@@ -138,8 +145,7 @@ const Home = () => {
         <div className="sign-language-info my-5 p-4">
           <h4 className="text-center text-white mb-5">Sudah Tahu Bahasa Isyarat Ini?</h4>
           <div className="d-flex flex-wrap justify-content-around align-items-center mt-4"> 
-            {[
-              { imageSrc: '/kalimat-isyarat/halo.png', text: 'Halo' },
+            {[{ imageSrc: '/kalimat-isyarat/halo.png', text: 'Halo' },
               { imageSrc: '/kalimat-isyarat/sekarang.png', text: 'Sekarang' },
               { imageSrc: '/kalimat-isyarat/lihat.png', text: 'Lihat' },
               { imageSrc: '/kalimat-isyarat/tanya.png', text: 'Tanya' },

@@ -1,0 +1,76 @@
+/* General Footer styles */
+footer {
+    width: 100%; /* Make footer take full width */
+    background-color: #fff; /* White background */
+    padding: 40px 0; /* Padding around the footer content */
+    border-top: 1px solid #e9ecef; /* Light border at the top */
+  }
+  
+  /* Container for the footer section */
+  footer .container {
+    max-width: 100%; /* Ensure container spans the entire width */
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Footer text */
+  footer p {
+    color: #6c757d; /* Muted text color */
+    font-size: 1rem; /* Standard font size */
+    line-height: 1.6; /* Line height for better readability */
+    margin-bottom: 15px;
+  }
+  
+  /* Footer headings */
+  footer h6 {
+    font-weight: 700; /* Bold headings */
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #343a40; /* Dark heading color */
+  }
+  
+  /* Footer links */
+  .footer-link {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 1rem; /* Font size for links */
+  }
+  
+  /* Hover effect for footer links */
+  .footer-link:hover {
+    color: #28acfb !important; /* Ensure hover effect overrides other styles */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
+  }
+  
+  /* Footer logo */
+  .footer-logo {
+    height: 60px;
+    width: auto; /* Ensure logo scales correctly */
+  }
+  
+  /* Footer copyright section */
+  footer .text-center {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px 0; /* Padding for the copyright area */
+    color: #6c757d; /* Muted text color */
+    font-size: 0.9rem;
+    border-top: 1px solid #dee2e6; /* Light border */
+    width: 100%; /* Ensure it spans full width */
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 768px) {
+    footer {
+      text-align: center; /* Center align content on smaller screens */
+    }
+  
+    .navbar-brand, .col-md-4 {
+      margin-bottom: 20px; /* Add spacing between sections */
+    }
+  
+    footer .container {
+      padding: 0 15px; /* Ensure padding on small screens */
+    }
+  }
+  

@@ -149,7 +149,7 @@ const Home = () => {
         </div>
 
         {/* Sign Language Learning Buddy Section */}
-        <div className="sign-language-learning-buddy row justify-content-between align-items-center">
+        <div className="sign-language-learning-buddy row justify-content-between align-items-center mb-4">
           <div className="image-section col-md-6 d-flex justify-content-center">
             <img src="/vector-2.png" alt="Sign Language Learning Buddy" className="rounded-circle" />
           </div>

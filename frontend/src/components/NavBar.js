@@ -45,14 +45,6 @@ function NavBar() {
             <li className="nav-item">
               <NavLink 
                 className={({ isActive }) => isActive ? 'nav-link fw-bolder' : 'nav-link'} 
-                to="/courses"
-              >
-                Kursus
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink 
-                className={({ isActive }) => isActive ? 'nav-link fw-bolder' : 'nav-link'} 
                 to="/dictionary"
               >
                 Kamus

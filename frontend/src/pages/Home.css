@@ -3,19 +3,19 @@
   padding-top: 20px;
 }
 
-/* Styling for the left container */
+/* Translation result styling */
 .translation-result {
   min-height: 150px;
-  font-size: 3rem; /* Increase font size for the single letter */
+  font-size: 3rem;
   color: #6c757d;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center; /* Center the letter horizontally */
-  font-weight: bold; /* Make the letter bold */
+  text-align: center;
+  font-weight: bold;
 }
 
-/* Webcam container with relative positioning to allow absolute positioning of child elements */
+/* Webcam container */
 .webcam-container {
   height: 300px;
   width: 100%;
@@ -29,7 +29,7 @@
   position: relative;
 }
 
-/* Stretch the webcam video to fit the container */
+/* Stretch webcam video */
 .webcam-container video {
   width: 100%;
   height: 100%;
@@ -37,7 +37,7 @@
   border-radius: 0.25rem;
 }
 
-/* Overlay for "Camera Off" icon */
+/* Camera off overlay */
 .camera-off-overlay {
   position: absolute;
   color: #6c757d;
@@ -60,13 +60,13 @@
   text-fill-color: transparent;
 }
 
-/* Styling for sign language section */
+/* Sign language section styling */
 .sign-language-info {
   background: linear-gradient(45deg, #0c4686, #28acfb);
   color: white;
   border-radius: 0.8rem;
   text-align: center;
-  padding: 20px;
+  padding: 30px;
 }
 
 .sign-language-info img {
@@ -83,21 +83,133 @@
   color: #ffffff;
 }
 
-/* Responsive layout for smaller devices */
+/* Responsive adjustments for medium screens */
 @media (max-width: 768px) {
-  .sign-language-info .text-center {
-    flex-basis: 25%;
+  .sign-language-learning-buddy {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .image-section img {
+    width: 350px;
+    height: 350px;
+  }
+
+  .image-section {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .text-section h4 {
+    font-size: 1.6rem;
+  }
+
+  .icon-container {
+    justify-content: flex-start;
+    flex-direction: row;
+  }
+
+  .icon-image {
+    width: 40px;
+  }
+
+  .text-content h6 {
+    font-size: 0.9rem;
+  }
+
+  .text-content p {
+    font-size: 0.8rem;
   }
 }
 
+/* Responsive adjustments for small screens */
 @media (max-width: 576px) {
-  .sign-language-info .text-center {
-    flex-basis: 25%;
+  .icon-container {
+    justify-content: flex-start;
+    flex-direction: row;
+    padding: 10px;
+  }
+
+  .image-section img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .icon-image {
+    width: 30px;
+  }
+
+  .text-content h6 {
+    font-size: 0.8rem;
+  }
+
+  .text-content p {
+    font-size: 0.7rem;
   }
 }
 
-@media (max-width: 400px) {
-  .sign-language-info .text-center {
-    margin-bottom: 10px; /* Reduce margin between images */
-  }
+/* Sign language learning buddy section */
+.sign-language-learning-buddy {
+  padding: 20px;
+  margin-top: 50px;
+}
+
+/* Image section */
+.image-section img {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.image-section img:hover {
+  transform: scale(1.05);
+}
+
+/* General styling for text section */
+.text-section {
+  padding: 20px;
+}
+
+.text-section h4 {
+  font-size: 1.8rem;
+}
+
+.text-section p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Icon container - side-by-side layout */
+.icon-container {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-direction: row;
+}
+
+.icon-image {
+  width: 50px;
+  margin-right: 15px;
+  transition: transform 0.2s ease;
+}
+
+.icon-image:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Text content */
+.text-content h6 {
+  font-size: 1rem;
+  color: #4a4a4a;
+  margin: 0;
+}
+
+.text-content p {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin: 0;
 }

@@ -2,58 +2,53 @@
 from flask import Flask, Response
 from flask_cors import CORS
 import cv2
-import mediapipe as mp
+from handGestureRecognition import process_frame
 
 app = Flask(__name__)
 CORS(app)
 
-# Initialize MediaPipe hand landmark model
-mp_hands = mp.solutions.hands
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-
-# Video stream generator function
 def generate_frames():
-    cap = cv2.VideoCapture(0)  # Open the webcam
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FPS, 15)
+
     if not cap.isOpened():
-        return
+        raise RuntimeError("Failed to open webcam")
 
-    with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=2) as hands:
-        while True:
-            success, frame = cap.read()
-            if not success:
-                break
+    frame_skip = 2
+    frame_count = 0
 
-            # Convert the image to RGB as MediaPipe requires
-            image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = hands.process(image_rgb)
+    while True:
+        success, frame = cap.read()
+        if not success:
+            break
 
-            # Convert back to BGR for OpenCV rendering
-            image_bgr = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
+        if frame_count % frame_skip != 0:
+            frame_count += 1
+            continue
 
-            if results.multi_hand_landmarks:
-                for hand_landmarks in results.multi_hand_landmarks:
-                    mp_drawing.draw_landmarks(
-                        image_bgr,
-                        hand_landmarks,
-                        mp_hands.HAND_CONNECTIONS,
-                        mp_drawing_styles.get_default_hand_landmarks_style(),
-                        mp_drawing_styles.get_default_hand_connections_style()
-                    )
+        frame_count += 1
 
-            # Encode the frame in JPEG format
-            ret, buffer = cv2.imencode('.jpg', image_bgr)
-            frame = buffer.tobytes()
+        frame = cv2.resize(frame, (640, 480))
+        gesture_detected, label, processed_frame = process_frame(frame)
 
-            # Yield the frame as part of a multipart response (video stream)
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        ret, buffer = cv2.imencode('.jpg', processed_frame)
+        frame = buffer.tobytes()
+
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
     cap.release()
 
+@app.route('/')
+def index():
+    return "Welcome! The video feed is available at /video_feed"
+
 @app.route('/video_feed')
 def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    try:
+        return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    except Exception as e:
+        return {"error": str(e)}, 500
 
 if __name__ == '__main__':
     app.run(debug=True)

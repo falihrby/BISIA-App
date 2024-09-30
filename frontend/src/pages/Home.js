@@ -6,9 +6,11 @@ import './Home.css';
 
 const Home = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   const startWebcam = () => {
     setIsCameraOn(true);
+    setVideoError(false);
   };
 
   const stopWebcam = () => {
@@ -37,18 +39,19 @@ const Home = () => {
 
           <aside className="col-md-5 mb-4 text-start">
             <div className="webcam-container">
-              {/* Display processed video stream from the backend */}
               {isCameraOn ? (
                 <img
                   src="http://localhost:5000/video_feed"
                   alt="Real-time hand landmark detection"
                   className="w-100 rounded"
+                  onError={() => setVideoError(true)}
                 />
               ) : (
                 <div className="camera-off-overlay">
                   <i className="bi bi-camera-video-off-fill"></i>
                 </div>
               )}
+              {videoError && <p className="text-danger">Failed to load the video feed. Check the backend connection.</p>}
             </div>
           </aside>
         </div>

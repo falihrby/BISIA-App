@@ -34,8 +34,7 @@ from gesture.Z_gesture import detect_bisindo_z
 
 # Initialize MediaPipe hands model
 mp_hands = mp.solutions.hands
-mp_drawing = mp.solutions.drawing_utils  
-mp_drawing_styles = mp.solutions.drawing_styles 
+mp_drawing = mp.solutions.drawing_utils
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -49,26 +48,14 @@ def process_frame(frame):
 
         image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
         if results.multi_hand_landmarks:
-            landmarks1 = results.multi_hand_landmarks[0]
-            landmarks2 = results.multi_hand_landmarks[1] if len(results.multi_hand_landmarks) > 1 else None
-
-            # Draw the hand landmarkdef process_frame(frame):
-    """Process the captured frame to detect hand gestures and draw landmarks."""
-    image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-    with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=2) as hands:
-        results = hands.process(image_rgb)
-
-        image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
-        if results.multi_hand_landmarks:
-            # Draw the hand landmarks on the frame
             for hand_landmarks in results.multi_hand_landmarks:
+                # Adjust circle size and thickness for landmarks and connections
                 mp_drawing.draw_landmarks(
                     image,
                     hand_landmarks,
                     mp_hands.HAND_CONNECTIONS,
-                    mp_drawing_styles.get_default_hand_landmarks_style(),
-                    mp_drawing_styles.get_default_hand_connections_style()
+                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=2),  # integer values
+                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=2)   # integer values
                 )
 
             landmarks1 = results.multi_hand_landmarks[0]

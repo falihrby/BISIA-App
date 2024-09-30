@@ -1,4 +1,5 @@
 # backend/handGestureRecognition.py
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -49,13 +50,13 @@ def process_frame(frame):
         image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                # Adjust circle size and thickness for landmarks and connections
+                # Set same color and size for both dots and connections
                 mp_drawing.draw_landmarks(
                     image,
                     hand_landmarks,
                     mp_hands.HAND_CONNECTIONS,
-                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=2),  # integer values
-                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=2)   # integer values
+                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=3), 
+                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=3)
                 )
 
             landmarks1 = results.multi_hand_landmarks[0]
@@ -64,7 +65,7 @@ def process_frame(frame):
             gesture_detected, label = detect_and_display_gesture(landmarks1, landmarks2, image)
             return gesture_detected, label, image
         else:
-            # No landmarks detected, return the original image
+            # No landmarks detected
             return False, None, frame
 
 def detect_and_display_gesture(landmarks1, landmarks2, image):
@@ -73,35 +74,35 @@ def detect_and_display_gesture(landmarks1, landmarks2, image):
     label = None
 
     gesture_mapping_single = [
-        (detect_bisindo_e, "Huruf E Terdeteksi"),
-        (detect_bisindo_i, "Huruf I Terdeteksi"),
-        (detect_bisindo_c, "Huruf C Terdeteksi"),
-        (detect_bisindo_o, "Huruf O Terdeteksi"),
-        (detect_bisindo_u, "Huruf U Terdeteksi"),
-        (detect_bisindo_l, "Huruf L Terdeteksi"),
-        (detect_bisindo_r, "Huruf R Terdeteksi"),
-        (detect_bisindo_j, "Huruf J Terdeteksi"),
-        (detect_bisindo_z, "Huruf Z Terdeteksi"),
-        (detect_bisindo_v, "Huruf V Terdeteksi")
+        (detect_bisindo_e, "E"),
+        (detect_bisindo_i, "I"),
+        (detect_bisindo_c, "C"),
+        (detect_bisindo_o, "O"),
+        (detect_bisindo_u, "U"),
+        (detect_bisindo_l, "L"),
+        (detect_bisindo_r, "R"),
+        (detect_bisindo_j, "J"),
+        (detect_bisindo_z, "Z"),
+        (detect_bisindo_v, "V")
     ]
 
     gesture_mapping_double = [
-        (detect_bisindo_a, "Huruf A Terdeteksi"),
-        (detect_bisindo_m, "Huruf M Terdeteksi"),
-        (detect_bisindo_n, "Huruf N Terdeteksi"),
-        (detect_bisindo_d, "Huruf D Terdeteksi"),
-        (detect_bisindo_p, "Huruf P Terdeteksi"),
-        (detect_bisindo_b, "Huruf B Terdeteksi"),
-        (detect_bisindo_h, "Huruf H Terdeteksi"),
-        (detect_bisindo_s, "Huruf S Terdeteksi"),
-        (detect_bisindo_k, "Huruf K Terdeteksi"),
-        (detect_bisindo_t, "Huruf T Terdeteksi"),
-        (detect_bisindo_g, "Huruf G Terdeteksi"),
-        (detect_bisindo_y, "Huruf Y Terdeteksi"),
-        (detect_bisindo_f, "Huruf F Terdeteksi"),
-        (detect_bisindo_w, "Huruf W Terdeteksi"),
-        (detect_bisindo_q, "Huruf Q Terdeteksi"),
-        (detect_bisindo_x, "Huruf X Terdeteksi")
+        (detect_bisindo_a, "A"),
+        (detect_bisindo_m, "M"),
+        (detect_bisindo_n, "N"),
+        (detect_bisindo_d, "D"),
+        (detect_bisindo_p, "P"),
+        (detect_bisindo_b, "B"),
+        (detect_bisindo_h, "H"),
+        (detect_bisindo_s, "S"),
+        (detect_bisindo_k, "K"),
+        (detect_bisindo_t, "T"),
+        (detect_bisindo_g, "G"),
+        (detect_bisindo_y, "Y"),
+        (detect_bisindo_f, "F"),
+        (detect_bisindo_w, "W"),
+        (detect_bisindo_q, "Q"),
+        (detect_bisindo_x, "X")
     ]
 
     if landmarks2:

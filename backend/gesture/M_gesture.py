@@ -2,7 +2,7 @@
 import numpy as np
 from .common import draw_combined_box, draw_keypoints_for_debugging  # Adjust path based on your project structure
 
-def detect_bisindo_m(landmarks1, landmarks2, image, debug=True):
+def detect_bisindo_m(landmarks1, landmarks2, image, debug=False):
     if landmarks1 is None or landmarks2 is None:
         return False
 

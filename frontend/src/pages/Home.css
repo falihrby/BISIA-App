@@ -6,8 +6,13 @@
 /* Styling for the left container */
 .translation-result {
   min-height: 150px;
-  font-size: 0.9rem;
+  font-size: 3rem; /* Increase font size for the single letter */
   color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Center the letter horizontally */
+  font-weight: bold; /* Make the letter bold */
 }
 
 /* Webcam container with relative positioning to allow absolute positioning of child elements */
@@ -81,13 +86,13 @@
 /* Responsive layout for smaller devices */
 @media (max-width: 768px) {
   .sign-language-info .text-center {
-    flex-basis: 25%; 
+    flex-basis: 25%;
   }
 }
 
 @media (max-width: 576px) {
   .sign-language-info .text-center {
-    flex-basis: 25%; 
+    flex-basis: 25%;
   }
 }
 

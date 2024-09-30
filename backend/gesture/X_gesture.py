@@ -1,7 +1,7 @@
 import numpy as np
 from .common import draw_combined_box, draw_keypoints_for_debugging
 
-def detect_bisindo_x(landmarks1, landmarks2, image, debug=True):
+def detect_bisindo_x(landmarks1, landmarks2, image, debug=False):
     if landmarks1 is None or landmarks2 is None:
         return False
 

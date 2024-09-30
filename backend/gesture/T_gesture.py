@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from .common import draw_combined_box, draw_keypoints_for_debugging  # Import both functions
 
-def detect_bisindo_t(landmarks1, landmarks2, image, debug=True):
+def detect_bisindo_t(landmarks1, landmarks2, image, debug=False):
     if landmarks1 is None or landmarks2 is None:
         return False
 

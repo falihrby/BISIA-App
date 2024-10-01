@@ -1,32 +1,26 @@
-# Build stage
-FROM node:18 as build
+# Use Node.js 18 as the base image
+FROM node:18
 
-# Set the working directory inside the container to /app
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy only the frontend package.json and package-lock.json first to leverage Docker layer caching
+# Copy the package.json and package-lock.json files to the container
 COPY frontend/package*.json ./frontend/
 
-# Install dependencies in the frontend directory
+# Install production dependencies only
 RUN npm --prefix frontend install --omit=dev
 
-# Copy the entire project to the container (after dependencies are cached)
+# Copy the remaining app files
 COPY . .
 
-# Build the React app in the frontend directory
+# Build the React frontend
 RUN npm --prefix frontend run build
 
-# Production stage (if you plan to serve the built files)
-FROM node:18 as production
+# Use serve or any other static file server to serve the build
+RUN npm install -g serve
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the build files from the build stage to production
-COPY --from=build /app/frontend/build /app/frontend/build
-
-# Use npx to serve the application (if you're using 'serve' or any other tool)
-CMD ["npx", "serve", "-s", "frontend/build"]
-
-# Expose the port serve will use (optional, if using 'serve')
+# Expose the port
 EXPOSE 5000
+
+# Serve the built app
+CMD ["serve", "-s", "frontend/build"]

@@ -14,24 +14,50 @@ The **BISIA Application** aims to create an interactive platform to help users, 
   Users can use their device's camera to detect and analyze hand gestures while practicing sign language.
   
 - **AI and Computer Vision**: 
-  The system is powered by AI and computer vision technologies, ensuring real-time feedback on the accuracy of the user’s movements.
+  The system is powered by AI (using TensorFlow and MediaPipe) and computer vision technologies to ensure real-time feedback on the user’s hand gestures.
   
 - **Real-Time Feedback**: 
-  As users perform various signs, the application provides instant feedback to help them adjust their gestures for better accuracy.
+  The application provides instant feedback on the user's gestures, allowing users to adjust their signs for better accuracy. Detected gestures are displayed on the screen for easy reference.
 
 ### 2. Indonesian Sign Language Dictionary:
-- A comprehensive dictionary of **Indonesian Sign Language** terms is available, allowing users to look up and practice individual signs.
+- A comprehensive **Indonesian Sign Language (BISINDO)** dictionary is available. Users can search and learn individual signs for both **letters** and **numbers** using the search feature.
+  
+- **Searchable Database**: 
+  Users can input letters or numbers to search for corresponding signs. The system offers results based on user input and provides images of the hand gestures for easier learning.
 
 ---
 
 ## Technologies Used
-- **React.js**: Frontend framework for creating a responsive and dynamic user interface.
-- **TensorFlow.js**: Used for real-time hand gesture detection using AI and machine learning models.
-- **Bootstrap**: CSS framework for responsive design and mobile-first development.
-- **Python (Backend)**: For AI model training and data processing.
-- **YouTube API**: For integrating video tutorials.
-- **WebRTC**: Enables real-time webcam access for gesture detection.
+### Frontend:
+- **React.js**: 
+  The frontend is built using React.js for a dynamic and responsive user interface.
+  
+- **Bootstrap**: 
+  Bootstrap is used for responsive design and ensuring a mobile-friendly experience.
+  
+- **React Router**: 
+  Enables smooth navigation between different pages such as the **Home** and **Dictionary** pages.
+  
+- **WebRTC**: 
+  Enables real-time webcam access to allow gesture recognition in the browser.
 
+### Backend:
+- **Python (Flask)**: 
+  Flask is used to handle backend services, including gesture recognition, webcam streaming, and gesture result fetching.
+  
+- **OpenCV and MediaPipe**: 
+  OpenCV handles webcam input, and **MediaPipe** is used to process hand landmarks and detect gestures in real-time.
+  
+- **Flask-CORS**: 
+  Enables Cross-Origin Resource Sharing to ensure seamless frontend-backend communication.
+
+### AI and Gesture Recognition:
+- **TensorFlow.js**: 
+  Although initially considered for gesture recognition, **MediaPipe** (in combination with Python's OpenCV) is used to track hand movements and identify gestures.
+  
+- **Custom Gesture Detection**: 
+  Each letter of the **BISINDO alphabet** is mapped to custom detection algorithms that recognize specific hand positions. The gestures are detected based on hand landmarks tracked by MediaPipe, processed in real-time by the backend.
+  
 ---
 
 ## Contribution

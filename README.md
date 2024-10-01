@@ -19,17 +19,7 @@ The **BISIA Application** aims to create an interactive platform to help users, 
 - **Real-Time Feedback**: 
   As users perform various signs, the application provides instant feedback to help them adjust their gestures for better accuracy.
 
-### 2. BISIA Sign Language Learning Course:
-- **Structured Courses**: 
-  The application offers several courses that are divided into modules with varying levels of difficulty, helping users progress at their own pace.
-  
-- **Video Tutorials**: 
-  Each module includes YouTube video tutorials, explained by experienced sign language instructors, to guide users through the learning process.
-  
-- **Quizzes and Assignments**: 
-  At the end of each module, users will be able to test their understanding through quizzes and assignments that ensure they grasp the lessons.
-
-### 3. Indonesian Sign Language Dictionary:
+### 2. Indonesian Sign Language Dictionary:
 - A comprehensive dictionary of **Indonesian Sign Language** terms is available, allowing users to look up and practice individual signs.
 
 ---

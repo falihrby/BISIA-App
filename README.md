@@ -59,3 +59,5 @@ For further questions or technical support, please contact us at [falihrahmat534
 Visit our website: [BISIA App]( )
 
 ![Beranda Screenshot](frontend/public/screenshoot-beranda.png)
+
+![Kamus Screenshot](frontend/public/screenshoot-kamus.png)

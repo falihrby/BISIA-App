@@ -1,0 +1,138 @@
+.dictionary-bg-section {
+  background: linear-gradient(rgba(41, 174, 253, 0.7), rgba(12, 70, 134, 0.7));
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  margin: 20px auto;
+  width: 95%;
+}
+
+.overlay {
+  text-align: center;
+}
+
+.search-bar-wrapper {
+  display: flex;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.input-search {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.btn-cari {
+  background-color: #2097e1;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cari:hover {
+  background-color: #187dc4;
+  color: white;
+}
+
+.kosakata-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.kosakata-label {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-toggle {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #6c757d;
+  background-color: transparent;
+  color: #6c757d;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-toggle.active {
+  background-color: #2097e1;
+  color: white;
+  border-color: #2097e1;
+}
+
+.btn-toggle:hover {
+  background-color: #187dc4;
+  color: white;
+}
+
+.card-section {
+  margin: 40px 0;
+}
+
+.card {
+  padding: 20px;
+  background-color: rgba(237, 237, 237, 0.8);
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.card-label {
+  font-size: 1.5em;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .dictionary-bg-section {
+    height: 280px;
+  }
+
+  .kosakata-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .search-bar-wrapper {
+    flex-direction: column;
+    max-width: 90%;
+  }
+
+  .input-search,
+  .btn-cari {
+    width: 100%;
+  }
+
+  .card-section {
+    margin-bottom: 20px;
+  }
+}

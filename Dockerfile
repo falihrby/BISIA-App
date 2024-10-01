@@ -1,26 +1,29 @@
-# Use Node.js 18 as the base image
-FROM node:18
+# Step 1: Build the React app using Node.js
+FROM node:18 AS build
 
-# Set the working directory inside the container
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the container
+# Copy the package.json and package-lock.json to the container
 COPY frontend/package*.json ./frontend/
 
-# Install production dependencies only
-RUN npm --prefix frontend install --omit=dev
+# Copy the rest of the app files into the container
+COPY ./frontend ./frontend
 
-# Copy the remaining app files
-COPY . .
+# Install all dependencies including devDependencies
+RUN npm --prefix frontend install
 
-# Build the React frontend
+# Build the React app for production
 RUN npm --prefix frontend run build
 
-# Use serve or any other static file server to serve the build
-RUN npm install -g serve
+# Step 2: Use nginx to serve the built app
+FROM nginx:alpine
 
-# Expose the port
-EXPOSE 5000
+# Copy the built React files from the previous stage to nginx's html directory
+COPY --from=build /app/frontend/build /usr/share/nginx/html
 
-# Serve the built app
-CMD ["serve", "-s", "frontend/build"]
+# Expose port 80 for HTTP traffic
+EXPOSE 80
+
+# Start nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]

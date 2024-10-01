@@ -1,0 +1,30 @@
+# Ignore node_modules from both root and frontend directory
+node_modules
+frontend/node_modules
+
+# Ignore build directories (these will be created during the Docker build)
+build
+frontend/build
+
+# Ignore sensitive environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore any log files
+*.log
+
+# Ignore git repository files
+.git
+.gitignore
+
+# Ignore editor-specific or OS-specific files
+.DS_Store
+.vscode
+.idea
+
+# Ignore Dockerfiles if there are multiple Docker setups
+Dockerfile
+docker-compose.yml

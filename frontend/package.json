@@ -17,10 +17,10 @@
     "web-vitals": "^4.2.3"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "react-scripts start",
     "serve": "serve -s build",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -1,0 +1,6 @@
+Flask==2.0.3
+Flask-CORS==3.0.10
+opencv-python-headless==4.5.5.62
+mediapipe==0.10.15
+waitress==2.0.0
+Werkzeug==2.0.3

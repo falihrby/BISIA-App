@@ -11,9 +11,13 @@ const Home = () => {
   const [gestureResult, setGestureResult] = useState(''); // Latest gesture result
   const [loading, setLoading] = useState(false); // Loading state for detection
 
+  // Set the base URL using environment variable or fallback to localhost:5001
+  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+
   const startWebcam = async () => {
     try {
-      await fetch('http://localhost:5000/start_camera');
+      // Call backend to start the camera
+      await fetch(`${apiBaseUrl}/start_camera`);
       setIsCameraOn(true);
       setVideoError(false);
       setLoading(true);
@@ -24,7 +28,8 @@ const Home = () => {
 
   const stopWebcam = async () => {
     try {
-      await fetch('http://localhost:5000/stop_camera');
+      // Call backend to stop the camera
+      await fetch(`${apiBaseUrl}/stop_camera`);
       setIsCameraOn(false);
       setLoading(false);
     } catch (error) {
@@ -34,9 +39,10 @@ const Home = () => {
 
   useEffect(() => {
     if (isCameraOn) {
+      // Periodically fetch the latest gesture result
       const interval = setInterval(async () => {
         try {
-          const response = await fetch('http://localhost:5000/gesture_result');
+          const response = await fetch(`${apiBaseUrl}/gesture_result`);
           const data = await response.json();
           if (data.gesture) {
             setGestureResult(data.gesture);
@@ -50,7 +56,7 @@ const Home = () => {
 
       return () => clearInterval(interval);
     }
-  }, [isCameraOn]);
+  }, [isCameraOn, apiBaseUrl]);
 
   return (
     <div className="content-wrapper">
@@ -101,7 +107,7 @@ const Home = () => {
             <div className="webcam-container">
               {isCameraOn ? (
                 <img
-                  src="http://localhost:5000/video_feed"
+                  src={`${apiBaseUrl}/video_feed`}
                   alt="Real-time hand landmark detection"
                   className="w-100 rounded"
                   onError={() => setVideoError(true)}

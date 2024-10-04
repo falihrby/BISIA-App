@@ -3,6 +3,7 @@
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
 import cv2
+import os
 import threading
 from handGestureRecognition import process_frame
 
@@ -102,4 +103,7 @@ def get_gesture_result():
         return jsonify({"gesture": None}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    from waitress import serve
+    port = int(os.environ.get("PORT", 5001))
+    serve(app, host='0.0.0.0', port=port)
+

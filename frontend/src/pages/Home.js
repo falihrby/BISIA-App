@@ -98,7 +98,7 @@ const Home = () => {
                 </button>
               )}
               <p className="mt-2 text-muted small">
-                Klik 'izinkan' saat melihat perintah di browser dan pastikan pencahayaan cukup.
+                Klik 'izinkan' saat muncul perintah di browser, pastikan pencahayaan cukup, dan tunggu sebentar jika kamera belum menyala.
               </p>
             </div>
           </section>
